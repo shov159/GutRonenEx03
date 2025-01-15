@@ -1,0 +1,10 @@
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\bin\Debug\Ex03.GarageLogic.dll.config
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\bin\Debug\Ex03.GarageLogic.dll
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\bin\Debug\Ex03.GarageLogic.pdb
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\bin\Debug\System.ValueTuple.dll
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\bin\Debug\System.ValueTuple.xml
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\obj\Debug\Ex03.GarageLogic.csproj.AssemblyReference.cache
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\obj\Debug\Ex03.GarageLogic.csproj.CoreCompileInputs.cache
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\obj\Debug\Ex03.GarageLogic.csproj.CopyComplete
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\obj\Debug\Ex03.GarageLogic.dll
+C:\Users\pavel\OneDrive\Desktop\C# APPS\Ex03 Pavel 328677513 Shoval 208232439\Ex03 Pavel 328677513 Shoval 208232439\obj\Debug\Ex03.GarageLogic.pdb
