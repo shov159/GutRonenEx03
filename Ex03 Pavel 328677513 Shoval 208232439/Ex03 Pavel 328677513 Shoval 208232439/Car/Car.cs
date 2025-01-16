@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
@@ -6,21 +7,23 @@ namespace Ex03.GarageLogic
     {
         private const int k_NumberOfDoorsInCar = 5;
         private const float k_MaxAirPreassureForWheel = 34f;
-        public eCarColor CarColor { get; set; }
+        private eCarColor m_CarColor;
         public eCarNumberOfDoors NumberOfDoors { get; set; }
 
         protected Car(EnergySystem i_EnergySystem) : base(k_NumberOfDoorsInCar, k_MaxAirPreassureForWheel, i_EnergySystem)
         {
-
+            UniquePropertiesOfThisVehicle.Add("CarColor", "Enter the color of your car: ");
+            UniquePropertiesOfThisVehicle.Add("NumberOfDoors", "Enter the number of doors your car has: ");
         }
 
-        /*public override List<(string PropertyName, string Prompt, string DataType)> GetPropertyDefinitions()
+        public eCarColor CarColor
         {
-            List<(string PropertyName, string Prompt, string DataType)> properties = base.GetPropertyDefinitions();
-            properties.Add(("CarColor", "Enter car color (Blue/Black/White/Gray):", "eCarColor"));
-            properties.Add(("NumberOfDoors", "Enter number of doors (2/3/4/5):", "eCarNumberOfDoors"));
-            return properties;
-        }*/
+            get { return m_CarColor; }
+            set
+            {
+                m_CarColor = value;
+            }
+        }
 
         public override string ToString()
         {

@@ -48,7 +48,6 @@
     <Compile Include="Car\ElectricCar.cs" />
     <Compile Include="EnergySystem\ElectricEnergySystem.cs" />
     <Compile Include="Enums\eVehicleTypes.cs" />
-    <Compile Include="Vehicle\UniqueInfoForEachVehicle.cs" />
     <Compile Include="Exception\ValueOutOfRangeException.cs" />
     <Compile Include="Motorcycle\ElectricMotorcycle.cs" />
     <Compile Include="Enums\eMotorcycleLicenseType.cs" />

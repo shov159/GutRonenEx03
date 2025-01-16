@@ -7,18 +7,11 @@ namespace Ex03.GarageLogic
         public eMotorcycleLicenseType LicenseType { get; set; }
         public int EngineVolume { get; set; }
 
-        protected Motorcycle(EnergySystem i_EnergySystem)
-            : base(2, 32f, i_EnergySystem)
+        protected Motorcycle(EnergySystem i_EnergySystem) : base(2, 32f, i_EnergySystem)
         {
+            UniquePropertiesOfThisVehicle.Add("LicenseType", "Enter the license type: ");
+            UniquePropertiesOfThisVehicle.Add("EngineVolume", "Enter the engine volume: ");
         }
-
-        /*public override List<(string PropertyName, string Prompt, string DataType)> GetPropertyDefinitions()
-        {
-            List<(string PropertyName, string Prompt, string DataType)> properties = base.GetPropertyDefinitions();
-            properties.Add(("LicenseType", "Enter license type (A1/A2/B1/B2):", "eMotorcycleLicenseType"));
-            properties.Add(("EngineVolume", "Enter engine volume (int):", "int"));
-            return properties;
-        }*/
 
         public override string ToString()
         {

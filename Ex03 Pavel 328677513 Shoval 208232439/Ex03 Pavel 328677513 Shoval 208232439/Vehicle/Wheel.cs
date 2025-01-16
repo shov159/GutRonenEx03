@@ -11,6 +11,15 @@ namespace Ex03.GarageLogic
         public string ManufacturerName { get; set; }
         public float CurrentAirPressure { get; set; }
         public float MaxAirPressure { get; set; }
+        public Dictionary<string, string> UniquePropertiesOfThisVehicle = new Dictionary<string, string>();
+
+        public Wheel(float i_MaxAirPressureForWheel)
+        {
+            MaxAirPressure = i_MaxAirPressureForWheel;
+            CurrentAirPressure = 0f;
+            UniquePropertiesOfThisVehicle.Add("ManufacturerName", "Enter the namufacturer of your wheel(s): ");
+
+        }
 
         public void InflateSingleWheel(float i_AirToInflate)
         {

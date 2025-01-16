@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Ex03.GarageLogic;
@@ -14,20 +15,7 @@ namespace Ex03.ConsoleUI
             bool exit = false;
             while (!exit)
             {
-                Console.Clear();
-                Console.WriteLine("==== Welcome to Garage Manage Platform ====");
-                Console.WriteLine("-------------------------------------------");
-                Console.WriteLine("Please select your wanted function:");
-                Console.WriteLine("1) Insert new vehicle");
-                Console.WriteLine("2) Display all vehicles license plates in garage");
-                Console.WriteLine("3) Update vehicle status");
-                Console.WriteLine("4) Inflate wheels to maximum");
-                Console.WriteLine("5) Refuel fueled vehicle");
-                Console.WriteLine("6) Charge electric vehicle");
-                Console.WriteLine("7) Display vehicle details by license plate");
-                Console.WriteLine("8) Exit");
-                Console.Write("Your choice: ");
-
+                PrintMenu();
                 string choice = Console.ReadLine();
                 switch (choice)
                 {
@@ -59,12 +47,28 @@ namespace Ex03.ConsoleUI
                         Console.WriteLine("Invalid input! Please enter a single 1-8 digit");
                         break;
                 }
-
                 if (!exit)
                 {
                     Pause();
                 }
             }
+        }
+
+        private void PrintMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("==== Welcome to Garage Manage Platform ====");
+            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine("Please select your wanted function:");
+            Console.WriteLine("1) Insert new vehicle");
+            Console.WriteLine("2) Display all vehicles license plates in garage");
+            Console.WriteLine("3) Update vehicle status");
+            Console.WriteLine("4) Inflate wheels to maximum");
+            Console.WriteLine("5) Refuel fueled vehicle");
+            Console.WriteLine("6) Charge electric vehicle");
+            Console.WriteLine("7) Display vehicle details by license plate");
+            Console.WriteLine("8) Exit");
+            Console.Write("Your choice: ");
         }
 
         private void InsertNewVehicle(Garage i_Garage, Factory i_Factory)
@@ -76,16 +80,45 @@ namespace Ex03.ConsoleUI
             {
                 i_Garage.ChangeVehicleStatus(plate, eStatusOfVehicleInGarage.InRepair);
                 Console.WriteLine("Vehicle already in garage. Status set to In Repair.");
-                return;
             }
+            else
+            {
+                eVehicleTypes chosenType = ChooseVehicleType();
+                Vehicle newVehicle = i_Factory.CreateNewVehicle(chosenType);
+                SetPropertiesForVehicle(newVehicle);
+                SetPropertiesForWheels(newVehicle);
 
-            eVehicleTypes chosenType = ChooseVehicleType();
-            Vehicle newVehicle = i_Factory.CreateNewVehicle(chosenType);
+                i_Garage.InsertVehicle(plate, newVehicle);
+                SetPropertiesForOwner(i_Garage, plate);
 
-            Console.Write("Enter Model Name: ");
-            newVehicle.ModelName = Console.ReadLine();
+                Console.WriteLine("Vehicle inserted successfully (InRepair).\n");
+            }
+        }
 
-            Console.WriteLine("Would you like to set the same air pressure for all wheels? (y/n)");
+        private void SetPropertiesForOwner(Garage i_Garage, string i_PlateNumber)
+        {
+            foreach (KeyValuePair<string, string> property in i_Garage.VehiclesInGarage[i_PlateNumber].UniquePropertiesOfThisVehicle)
+            {
+                Console.WriteLine(property.Value);
+                string input = Console.ReadLine();
+                SetPropertyValue(i_Garage.VehiclesInGarage[i_PlateNumber], property.Key, input);
+            }
+        }
+
+        private void SetPropertiesForVehicle(Vehicle i_NewVehicle)
+        {
+            foreach(KeyValuePair<string, string> property in i_NewVehicle.UniquePropertiesOfThisVehicle)
+            {
+                Console.WriteLine(property.Value);
+                string input = Console.ReadLine();
+                SetPropertyValue(i_NewVehicle, property.Key, input);
+
+            }
+        }
+
+        private void SetPropertiesForWheels(Vehicle i_NewVehicle)
+        {
+            Console.WriteLine("Would you like to set the same air pressure and manufacturer name for all wheels? (y/n)");
             string answer = Console.ReadLine();
             answer = CheckIfAirInputIsValid(answer);
 
@@ -93,34 +126,43 @@ namespace Ex03.ConsoleUI
             {
                 Console.Write("Enter air pressure for all wheels: ");
                 float pressure = float.Parse(Console.ReadLine());
-                newVehicle.InitializeAirInAllWheels(pressure);
+                i_NewVehicle.InitializeAirInAllWheels(pressure);
+
+                foreach (KeyValuePair<string, string> property in i_NewVehicle.Wheels[0].UniquePropertiesOfThisVehicle)
+                {
+                    Console.WriteLine(property.Value);
+                    string input = Console.ReadLine();
+                    SetPropertyValue(i_NewVehicle.Wheels[0], property.Key, input);
+
+                }
+
+                i_NewVehicle.InitializeManufacturerNameInAllWheels();
             }
             else
             {
-                for (int i = 0; i < newVehicle.Wheels.Count; i++)
+                for (int i = 0; i < i_NewVehicle.Wheels.Count; i++)
                 {
                     Console.Write($"Enter air pressure for wheel #{i + 1}: ");
                     float pressure = float.Parse(Console.ReadLine());
-                    newVehicle.Wheels[i].CurrentAirPressure = pressure;
+                    i_NewVehicle.Wheels[i].CurrentAirPressure = pressure;
+
+                    foreach (KeyValuePair<string, string> property in i_NewVehicle.Wheels[i].UniquePropertiesOfThisVehicle)
+                    {
+                        Console.WriteLine(property.Value);
+                        string input = Console.ReadLine();
+                        SetPropertyValue(i_NewVehicle.Wheels[i], property.Key, input);
+
+                    }
                 }
-            }
-
-
-
-            Console.Write("Enter Owner Name: ");
-            string ownerName = Console.ReadLine();
-            Console.Write("Enter Owner Phone: ");
-            string ownerPhone = Console.ReadLine();
-
-            i_Garage.InsertVehicle(plate, newVehicle, ownerName, ownerPhone);
-            Console.WriteLine("Vehicle inserted successfully (InRepair).\n");
+            } 
         }
 
-        /*private void GetUniqueInfoForVehicles( i_New)
+        static void SetPropertyValue(object i_Object, string i_PropertyName, object i_NewValueToSet)
         {
-            List<UniqueInfoForEachVehicle> info = new List<UniqueInfoForEachVehicle>();
-            newVehicle.GetPropertyDefinitions();
-        }*/
+            Type type = i_Object.GetType();
+            PropertyInfo propertyInfo = type.GetProperty(i_PropertyName);
+            propertyInfo.SetValue(i_Object, i_NewValueToSet);
+        }
 
         private string CheckIfAirInputIsValid(string i_UserInput)
         {

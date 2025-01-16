@@ -1,40 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-
-    /// <summary>
-    /// מחלקה העוטפת רכב הנמצא במוסך, יחד עם פרטי הבעלים וסטטוס הרכב.
-    /// </summary>
     public class VehicleInGarage
     {
         public Vehicle CurrentVehicle { get; set; }
-
         public string OwnerName { get; set; }
-
         public string OwnerPhoneNumber { get; set; }
-
         public eStatusOfVehicleInGarage Status { get; set; }
+        public Dictionary<string, string> UniquePropertiesOfThisVehicle = new Dictionary<string, string>();
 
-        /// <summary>
-        /// בנאי ברירת מחדל (לא חובה, אפשר גם לבנות בנאי מלא).
-        /// </summary>
-        public VehicleInGarage()
+        public VehicleInGarage(Vehicle i_Vehicle, eStatusOfVehicleInGarage i_InitialStatus)
         {
-        }
-
-        /// <summary>
-        /// לשימוש נוח יותר, אפשר בנאי מלא (לא חובה).
-        /// </summary>
-        public VehicleInGarage(
-            Vehicle i_Vehicle,
-            string i_OwnerName,
-            string i_OwnerPhoneNumber,
-            eStatusOfVehicleInGarage i_InitialStatus)
-        {
+            UniquePropertiesOfThisVehicle.Add("OwnerName", "Enter the name of the owner: ");
+            UniquePropertiesOfThisVehicle.Add("OwnerPhoneNumber", "Enter the phone number of the owner: ");
             CurrentVehicle = i_Vehicle;
-            OwnerName = i_OwnerName;
-            OwnerPhoneNumber = i_OwnerPhoneNumber;
             Status = i_InitialStatus;
         }
     }

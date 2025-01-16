@@ -7,24 +7,23 @@ namespace Ex03.GarageLogic
     {
         private string m_ModelName;
         private string m_LicensePlateNumber;
-        private readonly List<Wheel> r_Wheels;
+        private List<Wheel> r_Wheels;
         private EnergySystem m_EnergySystem;
+        public Dictionary<string, string> UniquePropertiesOfThisVehicle = new Dictionary<string, string>();
 
         protected Vehicle(int i_NumOfWheels, float i_MaxAirPressureForWheel, EnergySystem i_EnergySystem)
         {
+            UniquePropertiesOfThisVehicle.Add("ModelName", "Enter the name of the model: ");
+
             r_Wheels = new List<Wheel>(i_NumOfWheels);
 
             for (int i = 0; i < i_NumOfWheels; i++)
             {
-                r_Wheels.Add(new Wheel
-                {
-                    ManufacturerName = "DefaultManufacturer",
-                    MaxAirPressure = i_MaxAirPressureForWheel,
-                    CurrentAirPressure = 0f
-                });
+                Wheel newWheel = new Wheel(i_MaxAirPressureForWheel);
+                r_Wheels.Add(newWheel);
             }
 
-            m_EnergySystem = i_EnergySystem;
+            m_EnergySystem = i_EnergySystem; 
         }
 
         public string ModelName
@@ -39,23 +38,15 @@ namespace Ex03.GarageLogic
             set { m_LicensePlateNumber = value; }
         }
 
-        public IReadOnlyList<Wheel> Wheels
+        public List<Wheel> Wheels
         {
             get { return r_Wheels; }
+            set { r_Wheels = value; }
         }
 
         public EnergySystem EnergySystem
         {
             get { return m_EnergySystem; }
-        }
-
-        public virtual List<UniqueInfoForEachVehicle> GetPropertyDefinitions()
-        {
-            List<UniqueInfoForEachVehicle> info = new List<UniqueInfoForEachVehicle>();
-            info.Add(new UniqueInfoForEachVehicle("ModelName", "Enter model name:"));
-            info.Add(new UniqueInfoForEachVehicle("LicensePlateNumber", "Enter license plate:"));
-
-            return info;
         }
 
         public void InflateAllWheelsToMax()
@@ -75,6 +66,15 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public void InitializeManufacturerNameInAllWheels()
+        {
+            string manufacturerName = r_Wheels[0].ManufacturerName;
+
+            foreach (Wheel wheel in r_Wheels)
+            {
+                wheel.ManufacturerName = manufacturerName;
+            }
+        }
 
         public override string ToString()
         {
